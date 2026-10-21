@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockPro - Gestion des produits</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div>
+            <h1>Stock<span>Pro</span></h1>
+            <p>Gestion intelligente du catalogue</p>
+        </div>
+        <button id="btnAjouter" class="btn btn-primary">
+            + Ajouter un produit
+        </button>
+    </header>
+
+    <main class="container">
+        <section class="stats">
+            <article class="stat-card">
+                <p>Nombre de produits</p>
+                <h2 id="totalProduits">0</h2>
+            </article>
+            <article class="stat-card">
+                <p>Valeur totale du stock</p>
+                <h2 id="valeurStock">0 FCFA</h2>
+            </article>
+            <article class="stat-card">
+                <p>Unités vendues</p>
+                <h2 id="totalVentes">0</h2>
+            </article>
+            <article class="stat-card">
+                <p>Stocks faibles</p>
+                <h2 id="stocksFaibles">0</h2>
+            </article>
+        </section>
+
+        <section class="panel">
+            <h2>Recherche et filtrage</h2>
+            <div class="filters">
+                <input type="search" id="recherche"
+                       placeholder="Rechercher par nom...">
+
+                <select id="filtreCategorie">
+                    <option value="">Toutes les catégories</option>
+                </select>
+
+                <select id="filtreDisponibilite">
+                    <option value="">Toutes les disponibilités</option>
+                    <option value="disponible">Disponible</option>
+                    <option value="indisponible">Indisponible</option>
+                </select>
+
+                <button id="btnReinitialiser" class="btn btn-light">
+                    Réinitialiser
+                </button>
+            </div>
+            <p id="resultats" class="muted"></p>
+        </section>
+
+        <section class="panel" id="formulairePanel" hidden>
+            <h2 id="titreFormulaire">Ajouter un produit</h2>
+
+            <form id="formProduit">
+                <input type="hidden" id="produitId">
+
+                <div class="form-grid">
+                    <div>
+                        <label for="nom">Nom du produit</label>
+                        <input id="nom" required maxlength="100">
+                    </div>
+                    <div>
+                        <label for="categorie">Catégorie</label>
+                        <input id="categorie" required maxlength="60">
+                    </div>
+                    <div>
+                        <label for="prix">Prix (FCFA)</label>
+                        <input id="prix" type="number" min="0.01"
+                               step="0.01" required>
+                    </div>
+                    <div>
+                        <label for="quantite">Quantité en stock</label>
+                        <input id="quantite" type="number" min="0"
+                               step="1" required>
+                    </div>
+                    <div>
+                        <label for="ventes">Quantité vendue</label>
+                        <input id="ventes" type="number" min="0"
+                               step="1" value="0" required>
+                    </div>
+                    <div class="checkbox-field">
+                        <label>
+                            <input id="actif" type="checkbox" checked>
+                            Produit actif
+                        </label>
+                    </div>
+                </div>
+
+                <p id="messageFormulaire" role="status"></p>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        Enregistrer
+                    </button>
+                    <button type="button" id="btnAnnuler"
+                            class="btn btn-light">
+                        Annuler
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <section class="panel">
+            <h2>Catalogue des produits</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Produit</th>
+                            <th>Catégorie</th>
+                            <th>Prix</th>
+                            <th>Stock</th>
+                            <th>Ventes</th>
+                            <th>CA théorique</th>
+                            <th>État</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableProduits"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="analysis-grid">
+            <article class="panel">
+                <h2>Top 3 des ventes</h2>
+                <ol id="topVentes"></ol>
+            </article>
+
+            <article class="panel">
+                <h2>Stock par catégorie</h2>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Catégorie</th>
+                                <th>Nombre de produits</th>
+                                <th>Valeur du stock</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableCategories"></tbody>
+                    </table>
+                </div>
+            </article>
+        </section>
+
+        <section class="panel">
+            <h2>Détection des anomalies</h2>
+            <div class="anomalies">
+                <article class="anomaly-card">
+                    <h3>Stocks inférieurs à 5</h3>
+                    <ul id="listeStocksFaibles"></ul>
+                </article>
+                <article class="anomaly-card">
+                    <h3>Réapprovisionnement</h3>
+                    <ul id="listeReapprovisionnement"></ul>
+                </article>
+                <article class="anomaly-card">
+                    <h3>Identifiants en double</h3>
+                    <ul id="listeDoublons"></ul>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>StockPro — Application de gestion en JavaScript</footer>
+    <script src="script.js"></script>
+</body>
+</html>
